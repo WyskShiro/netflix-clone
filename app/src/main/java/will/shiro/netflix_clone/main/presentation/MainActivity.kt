@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<MainViewModel>(::a)
+    private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -33,10 +33,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    private fun a(): ViewModelProvider.Factory {
-        return viewModelFactory
     }
 }
 

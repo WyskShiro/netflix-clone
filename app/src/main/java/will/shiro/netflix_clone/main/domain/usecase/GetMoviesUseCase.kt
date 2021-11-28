@@ -1,4 +1,4 @@
-package will.shiro.netflix_clone.main.domain
+package will.shiro.netflix_clone.main.domain.usecase
 
 import javax.inject.Inject
 
