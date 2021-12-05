@@ -6,6 +6,7 @@
 
 -  Dagger2
 -  Retrofit
+-  Viewbinding
 
 ## 💻 About
 
