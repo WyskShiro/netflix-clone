@@ -1,17 +1,13 @@
 package will.shiro.netflix_clone.main.presentation
 
-import android.R
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.AndroidInjection
 import will.shiro.netflix_clone.databinding.ActivityMainBinding
 import javax.inject.Inject
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,20 +17,28 @@ class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel> { viewModelFactory }
 
     private lateinit var binding: ActivityMainBinding
+    private val adapter by lazy {
+        FeedAdapter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpUI()
+        setUpObservers()
         viewModel.getMovies()
+    }
 
-//        val toolbar = binding.toolbar
-//        setSupportActionBar(toolbar)
-//        val coll_toolbar = binding.collapsingToolbar
-//        coll_toolbar.title = "Test Title"
-////        coll_toolbar.setCollapsedTitleTextAppearance(R.style.coll_toolbar_title)
-////        coll_toolbar.setExpandedTitleTextAppearance(R.style.exp_toolbar_title)
-//        coll_toolbar.setContentScrimColor(Color.GREEN)
+    private fun setUpUI() = binding.run {
+        feedRecycler.layoutManager = LinearLayoutManager(this@MainActivity)
+        feedRecycler.adapter = adapter
+    }
+
+    private fun setUpObservers() {
+        viewModel.feedItems.observe(this) {
+            adapter.submitList(it)
+        }
     }
 }
