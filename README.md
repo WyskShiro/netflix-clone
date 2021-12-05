@@ -6,7 +6,8 @@
 
 -  Dagger2
 -  Retrofit
--  Viewbinding
+-  ViewBinding
+-  ViewModel
 
 ## 💻 About
 
