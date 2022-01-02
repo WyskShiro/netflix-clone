@@ -27,7 +27,10 @@ class MainViewModel @Inject constructor(
         _feedItems.postValue(
             listOf(
                 getFeedFeatured(),
-                getTop10()
+                getTop10(),
+                getPopular(),
+                getTop10(),
+                getPopular()
             )
         )
     }
@@ -46,6 +49,13 @@ class MainViewModel @Inject constructor(
     private fun getTop10(): FeedItem.MovieItem {
         return FeedItem.MovieItem(
             "Top 10",
+            readRawJson(R.raw.popular)
+        )
+    }
+
+    private fun getPopular(): FeedItem.MovieItem {
+        return FeedItem.MovieItem(
+            "Popular",
             readRawJson(R.raw.popular)
         )
     }

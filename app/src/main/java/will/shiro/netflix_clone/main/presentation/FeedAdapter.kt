@@ -24,25 +24,25 @@ class FeedAdapter : ListAdapter<FeedItem, FeedViewHolder>(FeedDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         return when (viewType) {
-            FEATURED_VIEW_TYPE -> FeaturedViewHolder(
-                ItemListFeaturedBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+            FEATURED_VIEW_TYPE -> {
+                FeaturedViewHolder(
+                    ItemListFeaturedBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
                 )
-            )
+            }
             TOP_10_VIEW_TYPE -> {
                 HorizontalMoviesViewHolder(
                     ItemListHorizontalMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 )
             }
-            else -> FeaturedViewHolder(
-                ItemListFeaturedBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+            else -> {
+                HorizontalMoviesViewHolder(
+                    ItemListHorizontalMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 )
-            )
+            }
         }
     }
 
