@@ -2,7 +2,7 @@ package will.shiro.netflix_clone.main.domain.entity
 
 import androidx.annotation.ColorInt
 
-data class FeedFeaturedMovie constructor(
+data class FeaturedMovie constructor(
     val image: String,
     @ColorInt
     val separatorColor: Int,

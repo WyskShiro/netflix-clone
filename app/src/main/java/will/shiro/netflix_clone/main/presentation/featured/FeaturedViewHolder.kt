@@ -1,10 +1,11 @@
-package will.shiro.netflix_clone.main.presentation
+package will.shiro.netflix_clone.main.presentation.featured
 
 import com.bumptech.glide.Glide
 import will.shiro.netflix_clone.databinding.ItemListFeaturedBinding
 import will.shiro.netflix_clone.ext.BULLET_SEPARATOR
 import will.shiro.netflix_clone.ext.parseBullets
 import will.shiro.netflix_clone.main.domain.entity.FeedItem
+import will.shiro.netflix_clone.main.presentation.FeedViewHolder
 
 class FeaturedViewHolder constructor(
     private val binding: ItemListFeaturedBinding
