@@ -1,11 +1,9 @@
 package will.shiro.netflix_clone.main.presentation
 
-import android.R
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.android.AndroidInjection
 import will.shiro.netflix_clone.databinding.ActivityMainBinding
-import javax.inject.Inject
-import kotlin.math.min
-import android.util.TypedValue
 import will.shiro.netflix_clone.ext.toPx
+import javax.inject.Inject
 import kotlin.math.max
+import kotlin.math.min
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,18 +53,23 @@ class MainActivity : AppCompatActivity() {
     private fun setUpUI() = binding.run {
         feedRecycler.layoutManager = LinearLayoutManager(this@MainActivity)
         feedRecycler.adapter = adapter
-        feedRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                binding.toolbarContainer.background = ColorDrawable(Color.BLACK).apply { alpha = getAlphaForAppBarLayout() }
-                Log.d("WILLIAM", (-menuItemsHeight).toString())
-                binding.toolbarContainer.y = max(-menuItemsHeight.toFloat(), originalY - binding.feedRecycler.computeVerticalScrollOffset().toFloat())
-            }
-        })
+        feedRecycler.addOnScrollListener(getFeedRecyclerScrollListener())
     }
 
     private fun setUpObservers() {
         viewModel.feedItems.observe(this) {
             adapter.submitList(it)
+        }
+    }
+
+    private fun getFeedRecyclerScrollListener(): RecyclerView.OnScrollListener {
+        return object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                with(binding.toolbarContainer) {
+                    background = ColorDrawable(Color.BLACK).apply { alpha = getAlphaForAppBarLayout() }
+                    y = max(-menuItemsHeight, originalY - binding.feedRecycler.computeVerticalScrollOffset().toFloat())
+                }
+            }
         }
     }
 

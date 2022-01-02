@@ -1,62 +1,56 @@
 package will.shiro.netflix_clone.main.presentation
 
 import android.app.Application
-import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import will.shiro.netflix_clone.R
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import will.shiro.netflix_clone.ext.addToDisposables
 import will.shiro.netflix_clone.ext.asLiveData
-import will.shiro.netflix_clone.main.domain.entity.FeaturedMovie
 import will.shiro.netflix_clone.main.domain.entity.FeedItem
-import will.shiro.netflix_clone.main.domain.usecase.GetMoviesUseCase
+import will.shiro.netflix_clone.main.domain.usecase.GetFeedFeaturedUseCase
+import will.shiro.netflix_clone.main.domain.usecase.GetPopularUseCase
+import will.shiro.netflix_clone.main.domain.usecase.GetTop10UseCase
 import javax.inject.Inject
-import will.shiro.netflix_clone.ext.readRawJson
-import will.shiro.netflix_clone.main.domain.entity.Movie
 
 
 class MainViewModel @Inject constructor(
     application: Application,
-    private val getMoviesUseCase: GetMoviesUseCase
+    private val getFeedFeaturedUseCase: GetFeedFeaturedUseCase,
+    private val getTop10UseCase: GetTop10UseCase,
+    private val getPopularUseCase: GetPopularUseCase
 ) : AndroidViewModel(application) {
 
     private val _feedItems = MutableLiveData<List<FeedItem>>()
+    private val disposables = CompositeDisposable()
 
     val feedItems = _feedItems.asLiveData()
 
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
+    }
+
     fun getMovies() {
-        _feedItems.postValue(
-            listOf(
-                getFeedFeatured(),
-                getTop10(),
-                getPopular(),
-                getTop10(),
-                getPopular()
+        Observable.combineLatest(
+            arrayOf(
+                getFeedFeaturedUseCase.execute(),
+                getTop10UseCase.execute(),
+                getPopularUseCase.execute()
             )
-        )
-    }
-
-    private fun getFeedFeatured(): FeedItem.FeaturedItem {
-        getTop10()
-        return FeedItem.FeaturedItem(
-            FeaturedMovie(
-                "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-                Color.parseColor("#FF35B8"),
-                listOf("Action", "Comedy", "Drama")
+        ) { items: Array<in FeedItem> ->
+            _feedItems.postValue(
+                items.map { it as FeedItem }
             )
-        )
-    }
-
-    private fun getTop10(): FeedItem.MovieItem {
-        return FeedItem.MovieItem(
-            "Top 10",
-            readRawJson(R.raw.popular)
-        )
-    }
-
-    private fun getPopular(): FeedItem.MovieItem {
-        return FeedItem.MovieItem(
-            "Popular",
-            readRawJson(R.raw.popular)
-        )
+        }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({}) {
+                Log.d("MAIN_VIEW_MODEL", it.toString())
+            }
+            .addToDisposables(disposables)
     }
 }
