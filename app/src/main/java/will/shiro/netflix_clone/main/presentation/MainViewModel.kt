@@ -1,5 +1,6 @@
 package will.shiro.netflix_clone.main.presentation
 
+import android.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import will.shiro.netflix_clone.ext.asLiveData
@@ -22,7 +23,8 @@ class MainViewModel @Inject constructor(
                 FeedItem.FeaturedItem(
                     FeedFeaturedMovie(
                         "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-                        listOf("Action", "Comedy")
+                        Color.parseColor("#FF35B8"),
+                        listOf("Action", "Comedy", "Drama")
                     )
                 )
             )
