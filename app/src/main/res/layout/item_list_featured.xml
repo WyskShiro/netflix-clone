@@ -27,11 +27,11 @@
 
     <TextView
         android:id="@+id/genres_text"
+        style="@style/NormalText12"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/size_16dp"
         android:gravity="center"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/movie_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,9 +55,10 @@
             app:tint="@color/white" />
 
         <TextView
+            style="@style/LightText10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minha lista"
+            android:text="My list"
             android:textColor="@color/white" />
     </LinearLayout>
 
@@ -93,6 +94,7 @@
             android:src="@drawable/ic_outline_info_24" />
 
         <TextView
+            style="@style/LightText10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Saiba mais"
