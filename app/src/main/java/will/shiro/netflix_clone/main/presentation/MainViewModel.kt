@@ -1,9 +1,8 @@
 package will.shiro.netflix_clone.main.presentation
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -18,11 +17,10 @@ import javax.inject.Inject
 
 
 class MainViewModel @Inject constructor(
-    application: Application,
     private val getFeedFeaturedUseCase: GetFeedFeaturedUseCase,
     private val getTop10UseCase: GetTop10UseCase,
     private val getPopularUseCase: GetPopularUseCase
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val _feedItems = MutableLiveData<List<FeedItem>>()
     private val disposables = CompositeDisposable()

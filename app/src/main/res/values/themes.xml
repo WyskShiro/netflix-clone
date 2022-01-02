@@ -19,7 +19,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:navigationBarColor">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.NetflixClone.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
